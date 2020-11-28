@@ -1,3 +1,9 @@
 server:
-  port: 9000
+  port: 9001
   context-path: /beerhouse
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: none
+  datasource:
+    platform: h2
