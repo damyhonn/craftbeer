@@ -209,6 +209,14 @@ public class CraftBeerApplicationTests {
                 .contentType("application/json")
                 .content(this.objectMapper.writeValueAsString(beer)))
                 .andExpect(status().isBadRequest());
+		
+		/* Pesquisar por uma ID inexistente */
+		Long idAleatoria = new RandomDataGenerator().nextLong(this.leftLimit, this.rightLimit);
+		
+		mockMvc.perform(delete("/beers/" + idAleatoria)
+                .contentType("application/json")
+                .content(this.objectMapper.writeValueAsString(null)))
+                .andExpect(status().isNotModified());
 	}
 	
 	private void getBeer(Beer beer) throws JsonProcessingException, Exception {

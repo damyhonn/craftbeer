@@ -10,6 +10,7 @@ import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -152,6 +153,13 @@ public class CraftBeerResource {
 		} catch (NumberFormatException e) {
 			LOGGER.info("ID inválido.");
 			throw new CraftBeerException("ID inválido.");
+		}
+		
+		/* Verifica se a ID a ser excluída existe na base de dados */
+		if (null == craftBeerService.beerById(idLong)) {
+			return ResponseEntity.status(HttpStatus.NOT_MODIFIED)
+					.contentType(MediaType.TEXT_PLAIN)
+					.body("Não foi encontrada cerveja para o ID fornecido.");
 		}
 
 		Long idDeleted = craftBeerService.removeBeerById(idLong);
