@@ -72,6 +72,7 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
 					<finalName>craft-beer</finalName>
+					<!-- <executable>true</executable> -->
 				</configuration>
 			</plugin>
 		</plugins>

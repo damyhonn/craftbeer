@@ -63,7 +63,7 @@ public class CraftBeerApplicationTests {
 	}
 	
 	@Test
-	public void order1_getBeersTest() throws JsonProcessingException, Exception {
+	public void test1getBeersTest() throws JsonProcessingException, Exception {
 		/* Busca sem cerveja adicionada */
 		getBeer(null);
 		List<Beer> beers = service.getBeers();
@@ -79,7 +79,7 @@ public class CraftBeerApplicationTests {
 	}
 
 	@Test
-	public void order2_addOneBeerTest() throws JsonProcessingException, Exception {
+	public void test2addOneBeerTest() throws JsonProcessingException, Exception {
 		/* Cerveja 1 já foi adicionada */
 		
 		List<Beer> beers = service.getBeers();
@@ -94,7 +94,7 @@ public class CraftBeerApplicationTests {
 	}
 	
 	@Test
-	public void order3_addTwoBeersTest() throws JsonProcessingException, Exception {
+	public void test3addTwoBeersTest() throws JsonProcessingException, Exception {
 		/* Cerveja 1 já foi adicionada */
 		
 		List<Beer> beers = service.getBeers();
@@ -109,7 +109,7 @@ public class CraftBeerApplicationTests {
 	}
 	
 	@Test
-	public void order4_findBeerByIdTest() throws JsonProcessingException, Exception {
+	public void test4findBeerByIdTest() throws JsonProcessingException, Exception {
 		/* Cervejas 1 e 2 já foram adicionadas*/
 		Beer beer = service.beerById(2L);
 		
@@ -130,16 +130,16 @@ public class CraftBeerApplicationTests {
 	}
 	
 	@Test
-	public void order5_findBeerByInvalidIdTest() throws JsonProcessingException, Exception {
+	public void test5findBeerByInvalidIdTest() throws JsonProcessingException, Exception {
 		/* Pesquisar pelo Service com ID inválida */
-		mockMvc.perform(get("/beers/" + "id_invalida")
+		mockMvc.perform(get("/beers/" + "idinvalida")
                 .contentType("application/json")
                 .content(this.objectMapper.writeValueAsString(beer)))
                 .andExpect(status().isBadRequest());
 	}
 	
 	@Test
-	public void order6_putBeerTest() throws JsonProcessingException, Exception {
+	public void test6putBeerTest() throws JsonProcessingException, Exception {
 		putBeer(this.beer2.getId(), this.beer3);
 		
 		Assertions.assertThat(service.getBeers().size() == 2);
@@ -154,15 +154,15 @@ public class CraftBeerApplicationTests {
 	}
 	
 	@Test
-	public void order7_putBeerInvalidIdTest() throws JsonProcessingException, Exception {
-		mockMvc.perform(put("/beers/" + "id_invalido")
+	public void test7putBeerInvalidIdTest() throws JsonProcessingException, Exception {
+		mockMvc.perform(put("/beers/" + "idinvalido")
                 .contentType("application/json")
                 .content(this.objectMapper.writeValueAsString(beer)))
                 .andExpect(status().isBadRequest());
 	}
 	
 	@Test
-	public void order8_patchBeerTest() throws JsonProcessingException, Exception {
+	public void test8patchBeerTest() throws JsonProcessingException, Exception {
 		patchBeer(this.beer3.getId(), this.beer4);
 		
 		Assertions.assertThat(service.getBeers().size() == 2);
@@ -190,22 +190,22 @@ public class CraftBeerApplicationTests {
 	}
 	
 	@Test
-	public void order9_patchBeerInvalidIdTest() throws JsonProcessingException, Exception {
-		mockMvc.perform(patch("/beers/" + "id_invalido")
+	public void test9patchBeerInvalidIdTest() throws JsonProcessingException, Exception {
+		mockMvc.perform(patch("/beers/" + "idinvalido")
                 .contentType("application/json")
                 .content(this.objectMapper.writeValueAsString(beer)))
                 .andExpect(status().isBadRequest());
 	}
 	
 	@Test
-	public void order9a_deleteBeerTest() throws JsonProcessingException, Exception {
+	public void test9adeleteBeerTest() throws JsonProcessingException, Exception {
 		deleteBeer(this.beer4.getId());
 		Assertions.assertThat(null == service.beerById(this.beer4.getId()));
 	}
 	
 	@Test
-	public void order9b_deleteBeerInvalidIdTest() throws JsonProcessingException, Exception {
-		mockMvc.perform(delete("/beers/" + "id_invalido")
+	public void test9bdeleteBeerInvalidIdTest() throws JsonProcessingException, Exception {
+		mockMvc.perform(delete("/beers/" + "idinvalido")
                 .contentType("application/json")
                 .content(this.objectMapper.writeValueAsString(beer)))
                 .andExpect(status().isBadRequest());

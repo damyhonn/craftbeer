@@ -10,7 +10,6 @@ import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -115,7 +114,6 @@ public class CraftBeerResource {
 						.body("ID já existe.");
 			}
 			/* Caso a ID da cerveja não existe, ela substituirá a anterior (idLong) */
-			List<Beer> lista = craftBeerService.getBeers();
 			craftBeerService.removeBeerById(idLong);
 			craftBeerService.patchBeer(beer);
 			return ResponseEntity.status(HttpStatus.OK)
