@@ -2,16 +2,20 @@ package com.beerhouse.service;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.beerhouse.exception.BeerAlreadyExistsException;
 import com.beerhouse.persistence.model.Beer;
 import com.beerhouse.persistence.repository.BeerRepository;
+import com.beerhouse.service.exception.CraftBeerException;
 
 @Service
 public class CraftBeerServiceImpl implements CraftBeerService {
 
+	private static final Logger LOGGER = LoggerFactory.getLogger(CraftBeerServiceImpl.class);
+	
 	@Autowired
 	private BeerRepository beerRepository;
 	
@@ -26,9 +30,10 @@ public class CraftBeerServiceImpl implements CraftBeerService {
 	}
 
 	@Override
-	public Beer addBeer(Beer beer) throws BeerAlreadyExistsException {
+	public Beer addBeer(Beer beer) throws CraftBeerException {
 		if (beerRepository.exists(beer.getId())) {
-			throw new BeerAlreadyExistsException("Cerveja já existe!");
+			LOGGER.info("Cerveja já existe.");
+			throw new CraftBeerException("Cerveja já existe!");
 		}
 		return beerRepository.save(beer);
 	}
